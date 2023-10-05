@@ -24,4 +24,11 @@ const createUser: IController = async (request, response) => {
   }
 };
 
-export { createUser };
+const getUsers: IController = async (request, response) => {
+  response.status(201).json({
+    success: true,
+    message: 'User List',
+  });
+};
+
+export { createUser, getUsers };

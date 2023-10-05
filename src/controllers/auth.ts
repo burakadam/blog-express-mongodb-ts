@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+
 import { findUserByEmailHelper } from '../helpers/user';
 import { compareHashedPassword } from '../utils/password';
+import { createToken } from '../utils/token';
 
 const login = async (request: Request, response: Response) => {
   try {
@@ -22,10 +24,12 @@ const login = async (request: Request, response: Response) => {
         .json({ success: false, message: 'Invalid password' });
     }
 
+    const token = createToken(user._id, email);
+
     response.status(201).json({
       success: true,
       message: 'Login successfully.',
-      user,
+      user: { ...user, token },
     });
   } catch (error) {
     //NOTE handle error message
