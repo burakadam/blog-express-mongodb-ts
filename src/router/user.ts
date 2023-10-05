@@ -5,8 +5,10 @@ import { authentication } from '../middleware/auth';
 
 const router: Router = express.Router();
 
+router.use('/', authentication);
+
 router.post('/createUser', createUser);
 
-router.post('/getUsers', authentication, getUsers);
+router.post('/getUsers', getUsers);
 
 export default router;
