@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { createUserHelper } from '../helpers/User';
+import { createUserHelper } from '../helpers/user';
+import { createHashedPassword } from '../utils/password';
 
 interface IController {
   (request: Request, response: Response): unknown;
@@ -8,8 +9,9 @@ interface IController {
 const createUser: IController = async (request, response) => {
   try {
     const { email, password } = request.body;
+    const hashedPassword = await createHashedPassword(password);
 
-    const user = await createUserHelper({ email, password });
+    const user = await createUserHelper({ email, password: hashedPassword });
 
     response.status(201).json({
       success: true,
@@ -17,11 +19,7 @@ const createUser: IController = async (request, response) => {
       user,
     });
   } catch (error) {
-    if (error === 1100)
-      response.status(409).json({
-        success: false,
-        message: 'User already in use',
-      });
+    //NOTE handle error message
     response.status(500).json({ success: false, message: error });
   }
 };
