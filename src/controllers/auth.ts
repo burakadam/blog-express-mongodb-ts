@@ -23,15 +23,12 @@ const login = async (request: Request, response: Response) => {
 
     const token = createToken(user._id, email);
 
-    response
-      .status(201)
-      .json(
-        successResponse('Login successfully.', {
-          user: { id: user._id, email: user.email, token },
-        })
-      );
+    response.status(201).json(
+      successResponse('Login successfully.', {
+        user: { id: user._id, email: user.email, token },
+      })
+    );
   } catch (error) {
-    //NOTE handle error message
     response.status(500).json(errorResponse(error));
   }
 };

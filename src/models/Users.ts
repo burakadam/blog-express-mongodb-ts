@@ -12,6 +12,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const UserModel = mongoose.model('User', UserSchema);

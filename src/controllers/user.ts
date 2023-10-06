@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { createUserHelper } from '../helpers/user';
+import { createUserHelper, updateUserById } from '../helpers/user';
 import { createHashedPassword } from '../utils/password';
 import { errorResponse, successResponse } from '../utils/response';
 
@@ -13,7 +13,11 @@ const createUser: IController = async (request, response) => {
     const { email, password } = request.body;
     const hashedPassword = await createHashedPassword(password);
 
-    const user = await createUserHelper({ email, password: hashedPassword });
+    const user = await createUserHelper({
+      email,
+      password: hashedPassword,
+      isActive: true,
+    });
 
     response.status(201).json(successResponse('User Created', user));
   } catch (error) {
@@ -25,6 +29,21 @@ const createUser: IController = async (request, response) => {
   }
 };
 
+const updateUserPassword: IController = async (request, response) => {
+  try {
+    const { id, password } = request.body;
+    const hashedPassword = await createHashedPassword(password);
+
+    const user = updateUserById(id, { password: hashedPassword });
+    if (!user)
+      return response.status(500).json(errorResponse('User not found'));
+
+    return response
+      .status(201)
+      .json(successResponse('Password updated successfully'));
+  } catch (error) {}
+};
+
 const getUsers: IController = async (request, response) => {
   response.status(201).json({
     success: true,
@@ -32,4 +51,4 @@ const getUsers: IController = async (request, response) => {
   });
 };
 
-export { createUser, getUsers };
+export { createUser, getUsers, updateUserPassword };

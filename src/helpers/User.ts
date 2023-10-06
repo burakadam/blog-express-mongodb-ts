@@ -5,4 +5,7 @@ const createUserHelper = (values: Record<string, any>) =>
 
 const findUserByEmailHelper = (email: string) => UserModel.findOne({ email });
 
-export { createUserHelper, findUserByEmailHelper };
+const updateUserById = (id: string, values: Record<string, any>) =>
+  UserModel.findByIdAndUpdate(id, values);
+
+export { createUserHelper, findUserByEmailHelper, updateUserById };
