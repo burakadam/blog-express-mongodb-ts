@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { createUserHelper } from '../helpers/user';
 import { createHashedPassword } from '../utils/password';
+import { errorResponse, successResponse } from '../utils/response';
 
 interface IController {
   (request: Request, response: Response): unknown;
@@ -13,14 +15,13 @@ const createUser: IController = async (request, response) => {
 
     const user = await createUserHelper({ email, password: hashedPassword });
 
-    response.status(201).json({
-      success: true,
-      message: 'User Created',
-      user,
-    });
+    response.status(201).json(successResponse('User Created', user));
   } catch (error) {
-    //NOTE handle error message
-    response.status(500).json({ success: false, message: error });
+    const errorMessage =
+      error instanceof mongoose.mongo.MongoError && error.code === 11000
+        ? 'User is already exist'
+        : error;
+    response.status(500).json(errorResponse(errorMessage));
   }
 };
 
