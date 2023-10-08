@@ -19,13 +19,13 @@ const createUser: IController = async (request, response) => {
       isActive: true,
     });
 
-    response.status(201).json(successResponse('User Created', user));
+    return response.status(201).json(successResponse('User Created', user));
   } catch (error) {
     const errorMessage =
       error instanceof mongoose.mongo.MongoError && error.code === 11000
         ? 'User is already exist'
         : error;
-    response.status(500).json(errorResponse(errorMessage));
+    return response.status(500).json(errorResponse(errorMessage));
   }
 };
 
@@ -41,11 +41,13 @@ const updateUserPassword: IController = async (request, response) => {
     return response
       .status(201)
       .json(successResponse('Password updated successfully'));
-  } catch (error) {}
+  } catch (error) {
+    return response.status(500).json(errorResponse(error));
+  }
 };
 
 const getUsers: IController = async (request, response) => {
-  response.status(201).json({
+  return response.status(201).json({
     success: true,
     message: 'User List',
   });

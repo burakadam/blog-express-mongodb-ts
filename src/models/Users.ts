@@ -16,6 +16,16 @@ const UserSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  permissions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Permission',
+    },
+  ],
 });
 
 const UserModel = mongoose.model('User', UserSchema);

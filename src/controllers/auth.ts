@@ -9,13 +9,23 @@ const login = async (request: Request, response: Response) => {
   try {
     const { email, password } = request.body;
 
+    if (!email || !password)
+      return response
+        .status(401)
+        .json(
+          errorResponse(`Please enter valid ${!email ? 'email' : 'password'}`)
+        );
+
     const user = await findUserByEmailHelper(email);
 
     if (!user) {
       return response.status(401).json(errorResponse('User not found!'));
     }
 
-    const isPasswordValid = compareHashedPassword(password, user.password);
+    const isPasswordValid = await compareHashedPassword(
+      password,
+      user.password
+    );
 
     if (!isPasswordValid) {
       return response.status(401).json(errorResponse('Invalid password'));
@@ -29,6 +39,7 @@ const login = async (request: Request, response: Response) => {
       })
     );
   } catch (error) {
+    console.log(error);
     response.status(500).json(errorResponse(error));
   }
 };

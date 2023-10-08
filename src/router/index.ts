@@ -3,9 +3,11 @@ import express, { Router } from 'express';
 const router: Router = express.Router();
 
 import authRouter from './auth';
-import userRouter from './user';
+import permissionRouter from './permissions';
+import userRouter from './users';
 
-router.use('/user', userRouter);
+router.use('/users', userRouter);
 router.use('/auth', authRouter);
+router.use('/permissions', permissionRouter);
 
 export default router;
