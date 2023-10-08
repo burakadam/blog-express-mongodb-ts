@@ -9,6 +9,6 @@ router.use('/', authentication);
 
 router.post('/createUser', createUser);
 
-router.post('/getUsers', getUsers);
+router.get('/getUsers', getUsers);
 
 export default router;

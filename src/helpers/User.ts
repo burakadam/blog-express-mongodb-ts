@@ -1,11 +1,22 @@
 import { UserModel } from '../models/Users';
 
-const createUserHelper = (values: Record<string, any>) =>
+const _createUser = (values: Record<string, any>) =>
   new UserModel(values).save();
 
-const findUserByEmailHelper = (email: string) => UserModel.findOne({ email });
+const _findUserByEmail = (email: string) =>
+  UserModel.findOne({ email }).select('+password');
 
-const updateUserById = (id: string, values: Record<string, any>) =>
+const _updateUserById = (id: string, values: Record<string, any>) =>
   UserModel.findByIdAndUpdate(id, values);
 
-export { createUserHelper, findUserByEmailHelper, updateUserById };
+const _getUsers = () => UserModel.find();
+
+const _getUserById = (id: string) => UserModel.findById(id);
+
+export {
+  _createUser,
+  _findUserByEmail,
+  _getUserById,
+  _getUsers,
+  _updateUserById,
+};

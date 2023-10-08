@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { createUserHelper, updateUserById } from '../helpers/user';
+import { _createUser, _getUsers, _updateUserById } from '../helpers/user';
 import { createHashedPassword } from '../utils/password';
 import { errorResponse, successResponse } from '../utils/response';
 
@@ -10,13 +10,14 @@ interface IController {
 
 const createUser: IController = async (request, response) => {
   try {
-    const { email, password } = request.body;
+    const { email, password, permissions } = request.body;
     const hashedPassword = await createHashedPassword(password);
 
-    const user = await createUserHelper({
+    const user = await _createUser({
       email,
       password: hashedPassword,
       isActive: true,
+      permissions,
     });
 
     return response.status(201).json(successResponse('User Created', user));
@@ -34,7 +35,7 @@ const updateUserPassword: IController = async (request, response) => {
     const { id, password } = request.body;
     const hashedPassword = await createHashedPassword(password);
 
-    const user = updateUserById(id, { password: hashedPassword });
+    const user = _updateUserById(id, { password: hashedPassword });
     if (!user)
       return response.status(500).json(errorResponse('User not found'));
 
@@ -47,10 +48,13 @@ const updateUserPassword: IController = async (request, response) => {
 };
 
 const getUsers: IController = async (request, response) => {
-  return response.status(201).json({
-    success: true,
-    message: 'User List',
-  });
+  try {
+    const users = await _getUsers();
+
+    return response.status(201).json(successResponse('Users List', users));
+  } catch (error) {
+    return response.status(500).json(errorResponse(error));
+  }
 };
 
 export { createUser, getUsers, updateUserPassword };

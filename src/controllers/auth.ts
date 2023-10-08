@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { findUserByEmailHelper } from '../helpers/user';
+import { _findUserByEmail } from '../helpers/user';
 import { compareHashedPassword } from '../utils/password';
 import { errorResponse, successResponse } from '../utils/response';
 import { createToken } from '../utils/token';
@@ -16,7 +16,7 @@ const login = async (request: Request, response: Response) => {
           errorResponse(`Please enter valid ${!email ? 'email' : 'password'}`)
         );
 
-    const user = await findUserByEmailHelper(email);
+    const user = await _findUserByEmail(email);
 
     if (!user) {
       return response.status(401).json(errorResponse('User not found!'));
@@ -35,7 +35,12 @@ const login = async (request: Request, response: Response) => {
 
     response.status(201).json(
       successResponse('Login successfully.', {
-        user: { id: user._id, email: user.email, token },
+        user: {
+          id: user._id,
+          email: user.email,
+          token,
+          permissions: user.permissions,
+        },
       })
     );
   } catch (error) {

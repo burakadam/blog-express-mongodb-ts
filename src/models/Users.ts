@@ -11,6 +11,7 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   isActive: {
     type: Boolean,
@@ -22,7 +23,7 @@ const UserSchema = new Schema({
   },
   permissions: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'Permission',
     },
   ],

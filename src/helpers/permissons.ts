@@ -1,6 +1,8 @@
 import { PermissionModel } from '../models/Permissions';
 
-const createPermissonHelper = (name: string, description: string) =>
+const _createPermisson = (name: string, description: string) =>
   new PermissionModel({ name, description }).save();
 
-export { createPermissonHelper };
+const _getPermissions = () => PermissionModel.find();
+
+export { _createPermisson, _getPermissions };
