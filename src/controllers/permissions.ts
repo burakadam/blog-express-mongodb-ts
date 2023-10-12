@@ -1,33 +1,25 @@
 import { Request, Response } from 'express';
 import { _createPermisson, _getPermissions } from '../helpers/permissons';
-import { errorResponse, successResponse } from '../utils/response';
+import { successResponse } from '../utils/response';
 
 interface IController {
   (request: Request, response: Response): unknown;
 }
 
 const createPermission: IController = async (request, response) => {
-  try {
-    const { name, description } = request.body;
+  const { name, description } = request.body;
 
-    await _createPermisson(name, description);
+  await _createPermisson(name, description);
 
-    return response.status(201).json(successResponse('Permission Created'));
-  } catch (error) {
-    return response.status(500).json(errorResponse(error));
-  }
+  return response.status(201).json(successResponse('Permission Created'));
 };
 
 const getPermissions: IController = async (request, response) => {
-  try {
-    const permissions = await _getPermissions();
+  const permissions = await _getPermissions();
 
-    return response
-      .status(201)
-      .json(successResponse('Permission List', permissions));
-  } catch (error) {
-    return response.status(500).json(errorResponse(error));
-  }
+  return response
+    .status(201)
+    .json(successResponse('Permission List', permissions));
 };
 
 export { createPermission, getPermissions };

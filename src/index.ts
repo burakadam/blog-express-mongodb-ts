@@ -6,6 +6,7 @@ import 'dotenv/config';
 import express from 'express';
 import http from 'http';
 import { connectDB } from './config/db';
+import { errorHandler } from './middleware/error';
 import indexRouter from './router';
 
 const PORT = process.env.PORT || 8080;
@@ -21,6 +22,8 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(indexRouter);
+
+app.use(errorHandler);
 
 const server = http.createServer(app);
 

@@ -1,17 +1,19 @@
-const standartResponse = (
-  success: boolean,
-  message: string | unknown,
-  rest?: object
-) => ({
-  success,
+import { ICustomError } from './customError';
+
+interface ISuccessResponse extends ICustomError {
+  message: string | null;
+  payload?: object;
+}
+
+const successResponse = (
+  message: string | null,
+  payload?: object
+): ISuccessResponse => ({
+  success: true,
+  errorMessage: null,
   message,
-  ...rest,
+  statusCode: 200,
+  payload,
 });
 
-const successResponse = (message: string | unknown, rest?: object) =>
-  standartResponse(true, message, rest);
-
-const errorResponse = (message: string | unknown, rest?: object) =>
-  standartResponse(false, message ?? 'Internal Server Error', rest);
-
-export { errorResponse, successResponse };
+export { successResponse };
