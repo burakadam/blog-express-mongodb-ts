@@ -1,15 +1,16 @@
 import express, { Router } from 'express';
 
+import { ROUTES } from '../constants/routes';
 import { createPermission, getPermissions } from '../controllers/permissions';
 import { authentication } from '../middleware/auth';
 import { serviceHandler } from '../utils/serviceHandler';
 
 const router: Router = express.Router();
 
-router.use('/', authentication);
+router.use(ROUTES.BASE, authentication);
 
-router.post('/createPermisson', serviceHandler(createPermission));
+router.post(ROUTES.PERMISSIONS.CREATE, serviceHandler(createPermission));
 
-router.get('/getPermissions', serviceHandler(getPermissions));
+router.get(ROUTES.PERMISSIONS.LIST, serviceHandler(getPermissions));
 
 export default router;

@@ -1,15 +1,16 @@
 import express, { Router } from 'express';
 
+import { ROUTES } from '../constants/routes';
 import { createUser, getUsers } from '../controllers/users';
 import { authentication } from '../middleware/auth';
 import { serviceHandler } from '../utils/serviceHandler';
 
 const router: Router = express.Router();
 
-router.use('/', authentication);
+router.use(ROUTES.BASE, authentication);
 
-router.post('/createUser', serviceHandler(createUser));
+router.post(ROUTES.USERS.CREATE, serviceHandler(createUser));
 
-router.get('/getUsers', serviceHandler(getUsers));
+router.get(ROUTES.USERS.LIST, serviceHandler(getUsers));
 
 export default router;
