@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
+
+import { CustomError } from '../utils/customError';
 import { verifyToken } from '../utils/token';
 
 const authentication = (
@@ -7,26 +9,17 @@ const authentication = (
   response: Response,
   next: NextFunction
 ) => {
+  const { code, text } = HTTP_STATUS_CODES.UNAUTHORIZED;
   const token = request.headers['x-access-token'] as string;
 
-  if (!token) {
-    const { code, text } = HTTP_STATUS_CODES.FORBIDDEN;
-    return response.status(code).json({
-      success: false,
-      message: text,
-    });
-  }
+  if (!token) throw CustomError(text, code);
 
-  try {
-    verifyToken(token);
-    return next();
-  } catch (error) {
-    const { code, text } = HTTP_STATUS_CODES.UNAUTHORIZED;
-    response.status(code).json({
-      success: false,
-      message: text,
-    });
-  }
+  const user_id = verifyToken(token);
+
+  if (!user_id) throw CustomError(text, code);
+
+  request.userId = user_id;
+  return next();
 };
 
 export { authentication };
