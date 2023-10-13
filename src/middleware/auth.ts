@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
 import { verifyToken } from '../utils/token';
 
 const authentication = (
@@ -9,9 +10,10 @@ const authentication = (
   const token = request.headers['x-access-token'] as string;
 
   if (!token) {
-    return response.status(403).json({
+    const { code, text } = HTTP_STATUS_CODES.FORBIDDEN;
+    return response.status(code).json({
       success: false,
-      message: 'A token is required for authentication',
+      message: text,
     });
   }
 
@@ -19,9 +21,10 @@ const authentication = (
     verifyToken(token);
     return next();
   } catch (error) {
-    response.status(401).json({
+    const { code, text } = HTTP_STATUS_CODES.UNAUTHORIZED;
+    response.status(code).json({
       success: false,
-      message: 'Invalid Token',
+      message: text,
     });
   }
 };

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
 import { _createUser, _getUsers, _updateUserById } from '../helpers/user';
 import { CustomError } from '../utils/customError';
 import { createHashedPassword } from '../utils/password';
@@ -19,7 +20,9 @@ const createUser: IController = async (request, response) => {
     permissions,
   });
 
-  return response.status(201).json(successResponse('User Created', user));
+  return response
+    .status(HTTP_STATUS_CODES.CREATED.code)
+    .json(successResponse('User Created', user));
 };
 
 const updateUserPassword: IController = async (request, response) => {
@@ -27,17 +30,20 @@ const updateUserPassword: IController = async (request, response) => {
   const hashedPassword = await createHashedPassword(password);
 
   const user = _updateUserById(id, { password: hashedPassword });
-  if (!user) throw CustomError('User not found', 500);
+  if (!user)
+    throw CustomError('User not found', HTTP_STATUS_CODES.UNAUTHORIZED.code);
 
   return response
-    .status(201)
+    .status(HTTP_STATUS_CODES.ACCEPTED.code)
     .json(successResponse('Password updated successfully'));
 };
 
 const getUsers: IController = async (request, response) => {
   const users = await _getUsers();
 
-  return response.status(201).json(successResponse('Users List', users));
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Users List', users));
 };
 
 export { createUser, getUsers, updateUserPassword };

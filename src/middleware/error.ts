@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
+import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
 import { CustomError, ICustomError } from '../utils/customError';
 
 const handleDuplicateKeyError = (err: any): ICustomError => {
-  const code = 409;
+  const code = HTTP_STATUS_CODES.CONFLICT.code;
   if (err.hasOwnProperty('keyValue')) {
     const field = Object.keys(err.keyValue)[0];
     const error = `${field.toUpperCase()} already in use.`;
@@ -16,7 +17,7 @@ const handleDuplicateKeyError = (err: any): ICustomError => {
 
 const handleValidationError = (err: mongoose.Error.ValidationError) => {
   let errors = Object.values(err.errors).map((el) => el.message);
-  let code = 400;
+  let code = HTTP_STATUS_CODES.UNAUTHORIZED.code;
 
   if (errors.length > 1) {
     const formattedErrors = errors.join(' ');
@@ -31,6 +32,8 @@ let errorObject: ICustomError = {
   statusCode: 500,
   errorMessage: 'Something went wrong! Please try again later.',
 };
+
+const defaultStatusCode = HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR.code;
 
 function errorHandler(
   err: any,
@@ -51,10 +54,10 @@ function errorHandler(
 
     if (err.errorMessage) errorObject = err;
 
-    return res.status(500).json(errorObject);
+    return res.status(err.statusCode || defaultStatusCode).json(errorObject);
   } catch (error) {
     errorObject.errorMessage = 'An unknown error occurred.';
-    return res.status(500).json(errorObject);
+    return res.status(defaultStatusCode).json(errorObject);
   }
 }
 
