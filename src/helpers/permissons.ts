@@ -1,8 +1,11 @@
 import { PermissionModel } from '../models/Permissions';
 
-const _createPermisson = (name: string, description: string) =>
-  new PermissionModel({ name, description }).save();
+const _createPermisson = (name: string, description: string, route: string) =>
+  new PermissionModel({ name, description, route }).save();
 
 const _getPermissions = () => PermissionModel.find();
 
-export { _createPermisson, _getPermissions };
+const _findPermissionByRoute = (route: string) =>
+  PermissionModel.findOne({ route });
+
+export { _createPermisson, _findPermissionByRoute, _getPermissions };

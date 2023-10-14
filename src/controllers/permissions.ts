@@ -8,9 +8,9 @@ interface IController {
 }
 
 const createPermission: IController = async (request, response) => {
-  const { name, description } = request.body;
+  const { name, description, route } = request.body;
 
-  await _createPermisson(name, description);
+  await _createPermisson(name, description, route);
 
   return response
     .status(HTTP_STATUS_CODES.CREATED.code)
