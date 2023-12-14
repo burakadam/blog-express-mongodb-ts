@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
 
-import { ROUTES } from '../constants/routes';
-import { login } from '../controllers/auth';
-import { serviceHandler } from '../utils/serviceHandler';
+import { ROUTES } from '@/constants/routes';
+import { login } from '@/controllers/auth';
+import { serviceHandler } from '@/utils/serviceHandler';
 
 const router: Router = express.Router();
 

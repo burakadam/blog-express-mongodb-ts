@@ -1,8 +1,8 @@
+import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
 import { NextFunction, Request, Response } from 'express';
-import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
 
-import { CustomError } from '../utils/customError';
-import { verifyToken } from '../utils/token';
+import { CustomError } from '@/utils/customError';
+import { verifyToken } from '@/utils/token';
 
 const authentication = (
   request: Request,

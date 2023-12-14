@@ -1,4 +1,4 @@
-import { UserModel } from '../models/User';
+import { UserModel } from '@/models/User';
 
 const _createUser = (values: Record<string, any>) =>
   new UserModel(values).save();

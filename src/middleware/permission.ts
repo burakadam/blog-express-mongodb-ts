@@ -1,8 +1,8 @@
+import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
+import { _findPermissionByRoute } from '@/helpers/permisson';
+import { _getUserById } from '@/helpers/user';
+import { CustomError } from '@/utils/customError';
 import { NextFunction, Request, Response } from 'express';
-import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
-import { _findPermissionByRoute } from '../helpers/permisson';
-import { _getUserById } from '../helpers/user';
-import { CustomError } from '../utils/customError';
 
 const checkPermission = async (
   req: Request,

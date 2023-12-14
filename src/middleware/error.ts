@@ -1,7 +1,7 @@
+import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
+import { CustomError, ICustomError } from '@/utils/customError';
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
-import { CustomError, ICustomError } from '../utils/customError';
 
 const handleDuplicateKeyError = (err: any): ICustomError => {
   const code = HTTP_STATUS_CODES.CONFLICT.code;

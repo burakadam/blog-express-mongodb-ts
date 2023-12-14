@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 
 const router: Router = express.Router();
 
-import { ROUTES } from 'constants/routes';
+import { ROUTES } from '@/constants/routes';
 import authRouter from './auth';
 import categoryRouter from './category';
 import permissionRouter from './permission';

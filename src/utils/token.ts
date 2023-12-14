@@ -1,6 +1,6 @@
+import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
-import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
 import { CustomError } from './customError';
 
 const TOKEN_EXPIRE_TIME = '2h';

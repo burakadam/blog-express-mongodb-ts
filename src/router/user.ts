@@ -1,10 +1,10 @@
 import express, { Router } from 'express';
 
-import { ROUTES } from '../constants/routes';
-import { createUser, getUsers } from '../controllers/user';
-import { authentication } from '../middleware/auth';
-import { checkPermission } from '../middleware/permission';
-import { serviceHandler } from '../utils/serviceHandler';
+import { ROUTES } from '@/constants/routes';
+import { createUser, getUsers } from '@/controllers/user';
+import { authentication } from '@/middleware/auth';
+import { checkPermission } from '@/middleware/permission';
+import { serviceHandler } from '@/utils/serviceHandler';
 
 const router: Router = express.Router();
 

@@ -1,10 +1,10 @@
+import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
+import { _findUserByEmail } from '@/helpers/user';
+import { CustomError } from '@/utils/customError';
+import { compareHashedPassword } from '@/utils/password';
+import { successResponse } from '@/utils/response';
+import { createToken } from '@/utils/token';
 import { Request, Response } from 'express';
-import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
-import { _findUserByEmail } from '../helpers/user';
-import { CustomError } from '../utils/customError';
-import { compareHashedPassword } from '../utils/password';
-import { successResponse } from '../utils/response';
-import { createToken } from '../utils/token';
 
 const login = async (request: Request, response: Response) => {
   const { email, password } = request.body;

@@ -1,7 +1,7 @@
-import { HTTP_STATUS_CODES } from 'constants/httpStatusCodes';
+import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
+import { _createCategory, _getCategories } from '@/helpers/cetagory';
+import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
-import { _createCategory, _getCategories } from 'helpers/cetagory';
-import { successResponse } from 'utils/response';
 
 interface IController {
   (request: Request, response: Response): unknown;
