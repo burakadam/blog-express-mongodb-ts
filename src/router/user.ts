@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 
 import { ROUTES } from '../constants/routes';
-import { createUser, getUsers } from '../controllers/users';
+import { createUser, getUsers } from '../controllers/user';
 import { authentication } from '../middleware/auth';
 import { checkPermission } from '../middleware/permission';
 import { serviceHandler } from '../utils/serviceHandler';
@@ -14,8 +14,8 @@ router.use(
   serviceHandler(checkPermission)
 );
 
-router.post(ROUTES.USERS.CREATE, serviceHandler(createUser));
+router.post(ROUTES.USER.CREATE, serviceHandler(createUser));
 
-router.get(ROUTES.USERS.LIST, serviceHandler(getUsers));
+router.get(ROUTES.USER.LIST, serviceHandler(getUsers));
 
 export default router;

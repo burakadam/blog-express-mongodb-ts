@@ -4,13 +4,18 @@ const ROUTES = {
     BASE: '/auth',
     LOGIN: '/login',
   },
-  USERS: {
-    BASE: '/users',
+  USER: {
+    BASE: '/user',
     CREATE: '/create',
     LIST: '/list',
   },
-  PERMISSIONS: {
-    BASE: '/permissions',
+  PERMISSION: {
+    BASE: '/permission',
+    CREATE: '/create',
+    LIST: '/list',
+  },
+  CATEGORY: {
+    BASE: '/category',
     CREATE: '/create',
     LIST: '/list',
   },

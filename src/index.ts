@@ -1,13 +1,14 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import { connectDB } from 'config/db';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import http from 'http';
-import { connectDB } from './config/db';
-import { errorHandler } from './middleware/error';
-import indexRouter from './router';
+import { errorHandler } from 'middleware/error';
+import 'module-alias/register';
+import indexRouter from 'router';
 
 const PORT = process.env.PORT || 8080;
 

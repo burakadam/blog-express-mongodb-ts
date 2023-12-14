@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
-import { _createPermisson, _getPermissions } from '../helpers/permissons';
+import { _createPermisson, _getPermissions } from '../helpers/permisson';
 import { successResponse } from '../utils/response';
 
 interface IController {

@@ -1,4 +1,4 @@
-import { PermissionModel } from '../models/Permissions';
+import { PermissionModel } from '../models/Permission';
 
 const _createPermisson = (name: string, description: string, route: string) =>
   new PermissionModel({ name, description, route }).save();
