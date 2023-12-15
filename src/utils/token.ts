@@ -1,4 +1,5 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
+import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
 import { CustomError } from './customError';

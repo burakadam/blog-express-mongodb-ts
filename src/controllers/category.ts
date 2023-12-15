@@ -14,7 +14,7 @@ const createCategory: IController = async (request, resposne) => {
 
   return resposne
     .status(HTTP_STATUS_CODES.CREATED.code)
-    .json(successResponse('Permission Created'));
+    .json(successResponse('Category Created'));
 };
 
 const getCategories: IController = async (request, resposne) => {
