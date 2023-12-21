@@ -5,4 +5,7 @@ const _createCategory = (name: string, description: string) =>
 
 const _getCategories = () => CategoryModel.find();
 
-export { _createCategory, _getCategories };
+const _updateCategoryById = (id: string, values: Record<string, any>) =>
+  CategoryModel.findByIdAndUpdate(id, values);
+
+export { _createCategory, _getCategories, _updateCategoryById };

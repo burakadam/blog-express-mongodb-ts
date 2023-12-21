@@ -18,6 +18,7 @@ const ROUTES = {
     BASE: '/category',
     CREATE: '/create',
     LIST: '/list',
+    UPDATE: '/update',
   },
 };
 
