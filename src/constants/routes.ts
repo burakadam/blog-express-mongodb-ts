@@ -19,6 +19,7 @@ const ROUTES = {
     CREATE: '/create',
     LIST: '/list',
     UPDATE: '/update',
+    DETAIL: '/detail',
   },
 };
 

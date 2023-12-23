@@ -1,9 +1,10 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
 import {
   _createCategory,
+  _findCategoryById,
   _getCategories,
   _updateCategoryById,
-} from '@/helpers/cetagory';
+} from '@/helpers/category';
 import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
 
@@ -39,4 +40,13 @@ const updateCategoryById: IController = async (request, response) => {
     .json(successResponse('Category Updated'));
 };
 
-export { createCategory, getCategories, updateCategoryById };
+const getCategoryById: IController = async (request, response) => {
+  const { id } = request.body;
+  const category = await _findCategoryById(id);
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Category Detail', category || {}));
+};
+
+export { createCategory, getCategories, getCategoryById, updateCategoryById };

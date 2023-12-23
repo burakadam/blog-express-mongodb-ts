@@ -2,6 +2,7 @@ import { ROUTES } from '@/constants/routes';
 import {
   createCategory,
   getCategories,
+  getCategoryById,
   updateCategoryById,
 } from '@/controllers/category';
 import { authentication } from '@/middleware/auth';
@@ -17,5 +18,7 @@ router.post(ROUTES.CATEGORY.CREATE, serviceHandler(createCategory));
 router.get(ROUTES.CATEGORY.LIST, serviceHandler(getCategories));
 
 router.post(ROUTES.CATEGORY.UPDATE, serviceHandler(updateCategoryById));
+
+router.post(ROUTES.CATEGORY.DETAIL, serviceHandler(getCategoryById));
 
 export default router;
