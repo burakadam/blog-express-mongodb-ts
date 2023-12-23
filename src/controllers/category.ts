@@ -5,6 +5,7 @@ import {
   _getCategories,
   _updateCategoryById,
 } from '@/helpers/category';
+import { CustomError } from '@/utils/customError';
 import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
 
@@ -33,7 +34,10 @@ const getCategories: IController = async (request, response) => {
 const updateCategoryById: IController = async (request, response) => {
   const { _id, name, description } = request.body;
 
-  await _updateCategoryById(_id, { name, description });
+  const category = await _updateCategoryById(_id, { name, description });
+
+  if (!category)
+    throw CustomError('Category not found', HTTP_STATUS_CODES.NOT_FOUND.code);
 
   return response
     .status(HTTP_STATUS_CODES.OK.code)
@@ -41,8 +45,11 @@ const updateCategoryById: IController = async (request, response) => {
 };
 
 const getCategoryById: IController = async (request, response) => {
-  const { id } = request.body;
-  const category = await _findCategoryById(id);
+  const { _id } = request.body;
+  const category = await _findCategoryById(_id);
+
+  if (!category)
+    throw CustomError('Category not found', HTTP_STATUS_CODES.NOT_FOUND.code);
 
   return response
     .status(HTTP_STATUS_CODES.OK.code)
