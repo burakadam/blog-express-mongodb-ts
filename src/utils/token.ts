@@ -27,4 +27,5 @@ const verifyToken = (token: string) => {
     throw CustomError(text, code);
   }
 };
+
 export { createToken, verifyToken };

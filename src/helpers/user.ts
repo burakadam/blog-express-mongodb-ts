@@ -13,10 +13,13 @@ const _getUsers = () => UserModel.find();
 
 const _getUserById = (id: string) => UserModel.findById(id);
 
+const _getUserByToken = (token: string) => UserModel.findOne({ token });
+
 export {
   _createUser,
   _findUserByEmail,
   _getUserById,
+  _getUserByToken,
   _getUsers,
   _updateUserById,
 };

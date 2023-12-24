@@ -3,6 +3,7 @@ const ROUTES = {
   AUTH: {
     BASE: '/auth',
     LOGIN: '/login',
+    ME: '/me',
   },
   USER: {
     BASE: '/user',
