@@ -34,12 +34,10 @@ const login = async (request: Request, response: Response) => {
 
   response.status(HTTP_STATUS_CODES.ACCEPTED.code).json(
     successResponse('Login successfully.', {
-      user: {
-        id: user._id,
-        email: user.email,
-        token,
-        permissions: user.permissions,
-      },
+      id: user._id,
+      email: user.email,
+      token,
+      permissions: user.permissions,
     })
   );
 };
@@ -58,11 +56,9 @@ const me = async (request: Request, response: Response) => {
 
   if (!user) throw CustomError(text, code);
 
-  response.status(HTTP_STATUS_CODES.ACCEPTED.code).json(
-    successResponse('Login successfully.', {
-      user,
-    })
-  );
+  response
+    .status(HTTP_STATUS_CODES.ACCEPTED.code)
+    .json(successResponse('Login successfully.', user));
 };
 
 export { login, me };
