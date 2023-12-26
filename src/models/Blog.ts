@@ -29,6 +29,10 @@ const BlogSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  viewCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const BlogModel = mongoose.model('Blog', BlogSchema);
