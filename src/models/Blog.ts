@@ -1,3 +1,4 @@
+import { MODELS } from '@/constants/models';
 import mongoose, { Schema } from 'mongoose';
 import { CategoryModel } from './Category';
 import { UserModel } from './User';
@@ -39,6 +40,6 @@ const BlogSchema = new mongoose.Schema({
   },
 });
 
-const BlogModel = mongoose.model('Blog', BlogSchema);
+const BlogModel = mongoose.model(MODELS.BLOG, BlogSchema);
 
 export { BlogModel };

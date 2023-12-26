@@ -1,3 +1,4 @@
+import { MODELS } from '@/constants/models';
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IUser {
@@ -6,6 +7,9 @@ export interface IUser {
   isActive: boolean;
   createdAt: Date;
   permissions: [string];
+  fullName: string;
+  profileImage: string;
+  blogs: [string];
 }
 
 const UserSchema = new Schema({
@@ -19,6 +23,18 @@ const UserSchema = new Schema({
     required: true,
     select: false,
   },
+  fullName: {
+    type: String,
+  },
+  profileImage: {
+    type: String,
+  },
+  blogs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: MODELS.BLOG,
+    },
+  ],
   isActive: {
     type: Boolean,
     required: true,
@@ -30,11 +46,11 @@ const UserSchema = new Schema({
   permissions: [
     {
       type: String,
-      ref: 'Permission',
+      ref: MODELS.PERMISSION,
     },
   ],
 });
 
-const UserModel = mongoose.model<IUser & Document>('User', UserSchema);
+const UserModel = mongoose.model<IUser & Document>(MODELS.USER, UserSchema);
 
 export { UserModel };
