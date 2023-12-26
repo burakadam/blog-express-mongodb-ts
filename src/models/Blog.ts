@@ -1,4 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
+import { CategoryModel } from './Category';
+import { UserModel } from './User';
+
+// export interface IBlog {
+//   title:string
+//   content:string
+//   author:
+// }
 
 const BlogSchema = new mongoose.Schema({
   title: {
@@ -11,14 +19,9 @@ const BlogSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    email: {
-      type: String,
-      required: true,
-    },
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
+    type: Schema.Types.ObjectId,
+    ref: UserModel,
+    required: true,
   },
   createdAt: {
     type: Date,
@@ -26,8 +29,9 @@ const BlogSchema = new mongoose.Schema({
   },
   tags: [String],
   category: {
-    type: String,
-    trim: true,
+    type: Schema.Types.ObjectId,
+    ref: CategoryModel,
+    required: true,
   },
   viewCount: {
     type: Number,

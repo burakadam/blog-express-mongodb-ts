@@ -1,6 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-const Schema = mongoose.Schema;
+export interface IPermission {
+  route: string;
+  name: string;
+  description: string;
+}
 
 const PermissionSchema = new Schema({
   route: {
@@ -19,6 +23,9 @@ const PermissionSchema = new Schema({
   },
 });
 
-const PermissionModel = mongoose.model('Permission', PermissionSchema);
+const PermissionModel = mongoose.model<IPermission & Document>(
+  'Permission',
+  PermissionSchema
+);
 
 export { PermissionModel };

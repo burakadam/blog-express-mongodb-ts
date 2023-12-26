@@ -1,11 +1,11 @@
-import { CategoryModel } from '@/models/Category';
+import { CategoryModel, ICategory } from '@/models/Category';
 
-const _createCategory = (name: string, description: string) =>
+const _getCategoryList = () => CategoryModel.find();
+
+const _createCategory = ({ name, description }: ICategory) =>
   new CategoryModel({ name, description }).save();
 
-const _getCategories = () => CategoryModel.find();
-
-const _updateCategoryById = (id: string, values: Record<string, any>) =>
+const _updateCategoryById = (id: string, values: ICategory) =>
   CategoryModel.findByIdAndUpdate(id, values);
 
 const _findCategoryById = (_id: string) => CategoryModel.findById(_id);
@@ -13,6 +13,6 @@ const _findCategoryById = (_id: string) => CategoryModel.findById(_id);
 export {
   _createCategory,
   _findCategoryById,
-  _getCategories,
+  _getCategoryList,
   _updateCategoryById,
 };

@@ -2,7 +2,7 @@ import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
 import {
   _createCategory,
   _findCategoryById,
-  _getCategories,
+  _getCategoryList,
   _updateCategoryById,
 } from '@/helpers/category';
 import { CustomError } from '@/utils/customError';
@@ -16,15 +16,15 @@ interface IController {
 const createCategory: IController = async (request, response) => {
   const { name, description } = request.body;
 
-  await _createCategory(name, description);
+  await _createCategory({ name, description });
 
   return response
     .status(HTTP_STATUS_CODES.CREATED.code)
     .json(successResponse('Category Created'));
 };
 
-const getCategories: IController = async (request, response) => {
-  const categories = await _getCategories();
+const getCategories: IController = async (_, response) => {
+  const categories = await _getCategoryList();
 
   return response
     .status(HTTP_STATUS_CODES.OK.code)

@@ -1,6 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-const Schema = mongoose.Schema;
+export interface IUser {
+  email: string;
+  password: string;
+  isActive: boolean;
+  createdAt: Date;
+  permissions: [string];
+}
 
 const UserSchema = new Schema({
   email: {
@@ -29,6 +35,6 @@ const UserSchema = new Schema({
   ],
 });
 
-const UserModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model<IUser & Document>('User', UserSchema);
 
 export { UserModel };

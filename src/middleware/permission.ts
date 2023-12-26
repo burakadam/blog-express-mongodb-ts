@@ -14,7 +14,7 @@ const checkPermission = async (
   const route = req.originalUrl;
 
   const user = await _getUserById(req.userId);
-  const permission = await _findPermissionByRoute(route);
+  const permission = await _findPermissionByRoute({ route });
 
   if (!user?.permissions || !permission) throw CustomError(text, code);
 
