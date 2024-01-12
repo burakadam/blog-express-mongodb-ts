@@ -11,7 +11,7 @@ import express, { Router } from 'express';
 
 const router: Router = express.Router();
 
-router.use(ROUTES.BASE, authentication);
+router.use(ROUTES.BASE, serviceHandler(authentication));
 
 router.post(ROUTES.CATEGORY.CREATE, serviceHandler(createCategory));
 

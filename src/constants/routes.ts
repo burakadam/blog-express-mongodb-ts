@@ -22,6 +22,10 @@ const ROUTES = {
     UPDATE: '/update',
     DETAIL: '/detail',
   },
+  ASSET: {
+    BASE: '/assets',
+    POST: '/post',
+  },
 };
 
 export { ROUTES };

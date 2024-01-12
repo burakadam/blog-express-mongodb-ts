@@ -7,7 +7,7 @@ import { serviceHandler } from '@/utils/serviceHandler';
 
 const router: Router = express.Router();
 
-router.use(ROUTES.BASE, authentication);
+router.use(ROUTES.BASE, serviceHandler(authentication));
 
 router.post(ROUTES.PERMISSION.CREATE, serviceHandler(createPermission));
 
