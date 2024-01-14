@@ -4,6 +4,7 @@ import { successResponse } from '@/utils/response';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import 'dotenv/config';
 import { Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IController {
   (request: Request, response: Response): unknown;
@@ -15,7 +16,7 @@ const postImage: IController = async (request, response) => {
 
   const command = new PutObjectCommand({
     Bucket: process.env.BUCKET_NAME,
-    Key: file?.originalname,
+    Key: uuidv4(),
     Body: file?.buffer,
     ContentType: file?.mimetype,
   });
