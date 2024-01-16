@@ -38,6 +38,10 @@ const BlogSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  poster: {
+    type: String,
+    required: true,
+  },
 });
 
 const BlogModel = mongoose.model(MODELS.BLOG, BlogSchema);

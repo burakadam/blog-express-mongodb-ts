@@ -1,32 +1,30 @@
 import { s3 } from '@/config/s3';
-import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { successResponse } from '@/utils/response';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import 'dotenv/config';
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 
 interface IController {
   (request: Request, response: Response): unknown;
 }
 
-const postImage: IController = async (request, response) => {
-  console.log('request', request.file);
-  const file = request.file;
-
+const postImage = async (
+  file: { buffer: Buffer; mimetype: string },
+  key: string
+) => {
   const command = new PutObjectCommand({
     Bucket: process.env.BUCKET_NAME,
-    Key: uuidv4(),
+    Key: key,
     Body: file?.buffer,
-    ContentType: file?.mimetype,
+    // ContentType: file?.mimetype,
+    ContentType: 'image/webp',
   });
 
   const sendImageResponse = await s3.send(command);
   console.log('sendImageResponse', sendImageResponse);
 
-  return response
-    .status(HTTP_STATUS_CODES.OK.code)
-    .json(successResponse('Image send to s3'));
+  // const s3ObjectURL = `https://${process.env.S3_BUCKET_NAME}.s3.[REGION].amazonaws.com/${userId}-profile-image.jpg`;
+
+  return sendImageResponse;
 };
 
 export { postImage };

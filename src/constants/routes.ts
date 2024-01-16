@@ -26,6 +26,13 @@ const ROUTES = {
     BASE: '/assets',
     POST: '/post',
   },
+  BLOG: {
+    BASE: '/blog',
+    CREATE: '/create',
+    LIST: '/list',
+    UPDATE: '/update',
+    DETAIL: '/detail',
+  },
 };
 
 export { ROUTES };
