@@ -9,10 +9,13 @@ import 'dotenv/config';
 import express from 'express';
 import http from 'http';
 import 'module-alias/register';
+import moment from 'moment-timezone';
 
 const PORT = process.env.PORT || 8080;
 
 const app = express();
+
+moment.tz.setDefault(process.env.TIME_ZONE);
 
 app.use(
   cors({

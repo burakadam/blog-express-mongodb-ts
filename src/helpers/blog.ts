@@ -1,9 +1,7 @@
-import { BlogModel } from '@/models/Blog';
+import { BlogModel, IBlog } from '@/models/Blog';
 
 const _getBlogList = () => BlogModel.find();
 
-// const _createBlog = (
-// values: BlogM
-// ) => new BlogModel().save();
+const _createBlog = (params: IBlog) => new BlogModel(params).save();
 
-export { _getBlogList };
+export { _createBlog, _getBlogList };
