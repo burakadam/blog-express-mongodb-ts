@@ -4,7 +4,7 @@ import {
   _findCategoryById,
   _getCategoryList,
   _updateCategoryById,
-} from '@/helpers/category';
+} from '@/helpers/mongoose/category';
 import { CustomError } from '@/utils/customError';
 import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';

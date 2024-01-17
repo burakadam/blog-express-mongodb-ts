@@ -1,5 +1,8 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _createPermisson, _getPermissions } from '@/helpers/permisson';
+import {
+  _createPermisson,
+  _getPermissions,
+} from '@/helpers/mongoose/permisson';
 import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
 

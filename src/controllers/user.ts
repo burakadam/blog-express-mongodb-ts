@@ -1,5 +1,9 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _createUser, _getUsers, _updateUserById } from '@/helpers/user';
+import {
+  _createUser,
+  _getUsers,
+  _updateUserById,
+} from '@/helpers/mongoose/user';
 import { CustomError } from '@/utils/customError';
 import { createHashedPassword } from '@/utils/password';
 import { successResponse } from '@/utils/response';

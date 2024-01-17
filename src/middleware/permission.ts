@@ -1,6 +1,6 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _findPermissionByRoute } from '@/helpers/permisson';
-import { _getUserById } from '@/helpers/user';
+import { _findPermissionByRoute } from '@/helpers/mongoose/permisson';
+import { _getUserById } from '@/helpers/mongoose/user';
 import { CustomError } from '@/utils/customError';
 import { NextFunction, Request, Response } from 'express';
 

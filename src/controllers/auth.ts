@@ -1,5 +1,5 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _findUserByEmail, _getUserById } from '@/helpers/user';
+import { _findUserByEmail, _getUserById } from '@/helpers/mongoose/user';
 import { CustomError } from '@/utils/customError';
 import { compareHashedPassword } from '@/utils/password';
 import { successResponse } from '@/utils/response';

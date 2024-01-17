@@ -13,7 +13,7 @@ router.use(ROUTES.BASE, serviceHandler(authentication));
 
 router.post(
   ROUTES.BLOG.CREATE,
-  upload.single('poster'),
+  serviceHandler(upload.single('poster')),
   serviceHandler(createBlog)
 );
 
