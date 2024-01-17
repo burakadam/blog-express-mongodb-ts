@@ -38,9 +38,11 @@ const createBlog = async (request: Request, response: Response) => {
     );
   }
 
-  const posterUrl = `https://${
-    process.env.BUCKET_NAME
-  }.s3.[REGION].amazonaws.com/${posterName}.${mime.extension(poster.mimetype)}`;
+  const posterUrl = `https://${process.env.BUCKET_NAME}.s3.${
+    process.env.BUCKET_REGION
+  }.amazonaws.com/${posterName}.${mime.extension(poster.mimetype)}`;
+
+  console.log({ ...request.body, poster: posterUrl });
 };
 
 export { createBlog };
