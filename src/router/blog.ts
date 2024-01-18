@@ -1,5 +1,5 @@
 import { ROUTES } from '@/constants/routes';
-import { createBlog } from '@/controllers/blog';
+import { createBlog, getBlogs } from '@/controllers/blog';
 import { authentication } from '@/middleware/auth';
 import { serviceHandler } from '@/utils/serviceHandler';
 import express, { Router } from 'express';
@@ -16,5 +16,7 @@ router.post(
   serviceHandler(upload.single('poster')),
   serviceHandler(createBlog)
 );
+
+router.post(ROUTES.BLOG.LIST, serviceHandler(getBlogs));
 
 export default router;

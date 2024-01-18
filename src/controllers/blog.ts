@@ -1,5 +1,5 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _createBlog } from '@/helpers/mongoose/blog';
+import { _createBlog, _getBlogList } from '@/helpers/mongoose/blog';
 import { saveImageToS3 } from '@/helpers/saveImageToS3';
 import { successResponse } from '@/utils/response';
 import { verifyToken } from '@/utils/token';
@@ -16,7 +16,7 @@ const createBlog = async (request: Request, response: Response) => {
   const token = request.headers['x-access-token'] as string;
   const user_id = verifyToken(token);
 
-  const posterUrl = saveImageToS3(request.file);
+  const posterUrl = await saveImageToS3(request.file);
 
   const blogParams = {
     ...params,
@@ -33,4 +33,18 @@ const createBlog = async (request: Request, response: Response) => {
     .json(successResponse('Blog Created'));
 };
 
-export { createBlog };
+const getBlogs = async (request: Request, response: Response) => {
+  const { page, pageSize } = request.body;
+
+  console.log('getBlogs', page, pageSize);
+
+  const blogs = await _getBlogList(page, pageSize);
+
+  console.log('blogs', blogs);
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Blog List', blogs));
+};
+
+export { createBlog, getBlogs };
