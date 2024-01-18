@@ -36,11 +36,7 @@ const createBlog = async (request: Request, response: Response) => {
 const getBlogs = async (request: Request, response: Response) => {
   const { page, pageSize } = request.body;
 
-  console.log('getBlogs', page, pageSize);
-
   const blogs = await _getBlogList(page, pageSize);
-
-  console.log('blogs', blogs);
 
   return response
     .status(HTTP_STATUS_CODES.OK.code)
