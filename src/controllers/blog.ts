@@ -11,14 +11,11 @@ interface IController {
 }
 
 const createBlog = async (request: Request, response: Response) => {
-  //   const { title, content, tags, category, poster } = request.body;
-  // console.log('createBlog', request.body);
   const params = request.body;
   const token = request.headers['x-access-token'] as string;
   const user_id = verifyToken(token);
 
   const posterUrl = await saveImageToS3(request.file);
-
   const updatedImgsContent = await saveBlogContentImagesToS3(
     JSON.parse(params.content)
   );

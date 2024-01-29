@@ -7,6 +7,7 @@ import mime from 'mime-types';
 import sharp from 'sharp';
 import { v4 as uuidv4 } from 'uuid';
 
+// NOTE: WRITE PROPER EXICAL STATE INTERFACE
 interface Content {
   root: {
     children: Array<{

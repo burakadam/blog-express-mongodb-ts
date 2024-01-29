@@ -17,7 +17,7 @@ const handleDuplicateKeyError = (err: any): ICustomError => {
 
 const handleValidationError = (err: mongoose.Error.ValidationError) => {
   let errors = Object.values(err.errors).map((el) => el.message);
-  let code = HTTP_STATUS_CODES.UNAUTHORIZED.code;
+  let code = HTTP_STATUS_CODES.BAD_REQUEST.code;
 
   if (errors.length > 1) {
     const formattedErrors = errors.join(' ');
@@ -42,8 +42,6 @@ function errorHandler(
   next: NextFunction
 ) {
   try {
-    console.error('%%%%ERROR%%%%%', err);
-
     if (err.name === 'ValidationError')
       errorObject = handleValidationError(
         err as mongoose.Error.ValidationError
