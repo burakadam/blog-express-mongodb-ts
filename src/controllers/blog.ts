@@ -1,5 +1,6 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
 import { _createBlog, _getBlogList } from '@/helpers/mongoose/blog';
+import { saveBlogContentImagesToS3 } from '@/helpers/saveBlogContentImagesTos3';
 import { saveImageToS3 } from '@/helpers/saveImageToS3';
 import { successResponse } from '@/utils/response';
 import { verifyToken } from '@/utils/token';
@@ -18,8 +19,13 @@ const createBlog = async (request: Request, response: Response) => {
 
   const posterUrl = await saveImageToS3(request.file);
 
+  const updatedImgsContent = await saveBlogContentImagesToS3(
+    JSON.parse(params.content)
+  );
+
   const blogParams = {
     ...params,
+    content: JSON.stringify(updatedImgsContent),
     poster: posterUrl,
     author: user_id,
     viewCount: 0,
