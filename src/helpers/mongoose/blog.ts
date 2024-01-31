@@ -12,4 +12,6 @@ const _getBlogList = (page: number, pageSize: number) =>
 
 const _createBlog = (params: IBlog) => new BlogModel(params).save();
 
-export { _createBlog, _getBlogList };
+const _findBlogById = (_id: string) => BlogModel.findById(_id);
+
+export { _createBlog, _findBlogById, _getBlogList };

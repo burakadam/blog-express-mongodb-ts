@@ -1,7 +1,13 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _createBlog, _getBlogList } from '@/helpers/mongoose/blog';
+import {
+  _createBlog,
+  _findBlogById,
+  _getBlogList,
+} from '@/helpers/mongoose/blog';
+import { _getCategoryList } from '@/helpers/mongoose/category';
 import { saveBlogContentImagesToS3 } from '@/helpers/saveBlogContentImagesTos3';
 import { saveImageToS3 } from '@/helpers/saveImageToS3';
+import { CustomError } from '@/utils/customError';
 import { successResponse } from '@/utils/response';
 import { verifyToken } from '@/utils/token';
 import { Request, Response } from 'express';
@@ -46,4 +52,30 @@ const getBlogs = async (request: Request, response: Response) => {
     .json(successResponse('Blog List', blogs));
 };
 
-export { createBlog, getBlogs };
+const getBlogById: IController = async (
+  request: Request,
+  response: Response
+) => {
+  const { _id } = request.body;
+  const blog = await _findBlogById(_id);
+
+  if (!blog)
+    throw CustomError('Blog not found', HTTP_STATUS_CODES.NOT_FOUND.code);
+
+  const categories = await _getCategoryList();
+
+  if (!categories)
+    throw CustomError('No Category found', HTTP_STATUS_CODES.NOT_FOUND.code);
+
+  return response.status(HTTP_STATUS_CODES.OK.code).json(
+    successResponse(
+      'Blog Detail',
+      {
+        blog,
+        categories,
+      } || {}
+    )
+  );
+};
+
+export { createBlog, getBlogById, getBlogs };
