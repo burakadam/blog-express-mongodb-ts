@@ -1,5 +1,10 @@
 import { ROUTES } from '@/constants/routes';
-import { createBlog, getBlogById, getBlogs } from '@/controllers/blog';
+import {
+  createBlog,
+  getBlogById,
+  getBlogs,
+  updateBlogById,
+} from '@/controllers/blog';
 import { authentication } from '@/middleware/auth';
 import { serviceHandler } from '@/utils/serviceHandler';
 import express, { Router } from 'express';
@@ -20,5 +25,11 @@ router.post(
 router.post(ROUTES.BLOG.LIST, serviceHandler(getBlogs));
 
 router.post(ROUTES.BLOG.DETAIL, serviceHandler(getBlogById));
+
+router.post(
+  ROUTES.BLOG.UPDATE,
+  serviceHandler(upload.single('poster')),
+  serviceHandler(updateBlogById)
+);
 
 export default router;

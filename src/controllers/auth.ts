@@ -43,7 +43,7 @@ const login = async (request: Request, response: Response) => {
 };
 
 const me = async (request: Request, response: Response) => {
-  const { code, text } = HTTP_STATUS_CODES.UNAUTHORIZED;
+  const { code, text } = HTTP_STATUS_CODES.FORBIDDEN;
   const token = request.headers['x-access-token'] as string;
 
   if (!token) throw CustomError(text, code);

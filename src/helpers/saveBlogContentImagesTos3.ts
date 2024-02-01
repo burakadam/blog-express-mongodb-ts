@@ -7,6 +7,9 @@ import mime from 'mime-types';
 import sharp from 'sharp';
 import { v4 as uuidv4 } from 'uuid';
 
+const base64RegExp =
+  /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$/;
+
 // NOTE: WRITE PROPER EXICAL STATE INTERFACE
 interface Content {
   root: {
@@ -32,7 +35,7 @@ const saveBlogContentImagesToS3 = async (content: Content) => {
     for (let i = 0; i < child.children.length; i++) {
       const el = child.children[i];
 
-      if (el.type === 'image' && el.src) {
+      if (el.type === 'image' && el.src && base64RegExp.test(el.src)) {
         try {
           const buffer = Buffer.from(
             el.src.replace(/^data:image\/\w+;base64,/, ''),

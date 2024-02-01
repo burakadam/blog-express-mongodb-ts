@@ -14,4 +14,7 @@ const _createBlog = (params: IBlog) => new BlogModel(params).save();
 
 const _findBlogById = (_id: string) => BlogModel.findById(_id);
 
-export { _createBlog, _findBlogById, _getBlogList };
+const _updateBlogById = (id: string, params: IBlog) =>
+  BlogModel.findByIdAndUpdate(id, params);
+
+export { _createBlog, _findBlogById, _getBlogList, _updateBlogById };

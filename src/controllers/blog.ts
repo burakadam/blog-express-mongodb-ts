@@ -3,6 +3,7 @@ import {
   _createBlog,
   _findBlogById,
   _getBlogList,
+  _updateBlogById,
 } from '@/helpers/mongoose/blog';
 import { _getCategoryList } from '@/helpers/mongoose/category';
 import { saveBlogContentImagesToS3 } from '@/helpers/saveBlogContentImagesTos3';
@@ -78,4 +79,35 @@ const getBlogById: IController = async (
   );
 };
 
-export { createBlog, getBlogById, getBlogs };
+const updateBlogById: IController = async (request, response) => {
+  const params = request.body;
+  const token = request.headers['x-access-token'] as string;
+  const user_id = verifyToken(token);
+  let poster;
+
+  if (request.file) poster = await saveImageToS3(request.file);
+  else poster = params.poster;
+
+  const updatedImgsContent = await saveBlogContentImagesToS3(
+    JSON.parse(params.content)
+  );
+
+  const blogParams = {
+    ...params,
+    content: JSON.stringify(updatedImgsContent),
+    poster: poster,
+    author: user_id,
+    ...(params.tags && { tags: params.tags.split(',') }),
+  };
+
+  const blog = await _updateBlogById(params.id, blogParams);
+
+  if (!blog)
+    throw CustomError('Blog not found', HTTP_STATUS_CODES.NOT_FOUND.code);
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Blog Updated'));
+};
+
+export { createBlog, getBlogById, getBlogs, updateBlogById };
