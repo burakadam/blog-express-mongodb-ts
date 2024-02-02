@@ -1,6 +1,7 @@
 import { ROUTES } from '@/constants/routes';
 import {
   createBlog,
+  deleteBlogById,
   getBlogById,
   getBlogs,
   updateBlogById,
@@ -31,5 +32,7 @@ router.post(
   serviceHandler(upload.single('poster')),
   serviceHandler(updateBlogById)
 );
+
+router.post(ROUTES.BLOG.DELETE, serviceHandler(deleteBlogById));
 
 export default router;

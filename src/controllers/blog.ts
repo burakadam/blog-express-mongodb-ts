@@ -1,6 +1,7 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
 import {
   _createBlog,
+  _deleteBlogById,
   _findBlogById,
   _getBlogList,
   _updateBlogById,
@@ -110,4 +111,20 @@ const updateBlogById: IController = async (request, response) => {
     .json(successResponse('Blog Updated'));
 };
 
-export { createBlog, getBlogById, getBlogs, updateBlogById };
+const deleteBlogById: IController = async (request, response) => {
+  const { _id } = request.body;
+
+  const deletedBlog = await _deleteBlogById(_id);
+
+  if (!deletedBlog)
+    throw CustomError('Blog not found', HTTP_STATUS_CODES.NOT_FOUND.code);
+
+  // ADD FILTERS TO REQUEST
+  const blogs = await _getBlogList(1, 10);
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Blog Deleted', blogs));
+};
+
+export { createBlog, deleteBlogById, getBlogById, getBlogs, updateBlogById };
