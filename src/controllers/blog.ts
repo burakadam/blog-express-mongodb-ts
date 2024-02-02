@@ -45,9 +45,9 @@ const createBlog = async (request: Request, response: Response) => {
 };
 
 const getBlogs = async (request: Request, response: Response) => {
-  const { page, pageSize } = request.body;
+  const { page, pageSize, search } = request.body;
 
-  const blogs = await _getBlogList(page, pageSize);
+  const blogs = await _getBlogList(page, pageSize, search);
 
   return response
     .status(HTTP_STATUS_CODES.OK.code)
@@ -114,13 +114,15 @@ const updateBlogById: IController = async (request, response) => {
 const deleteBlogById: IController = async (request, response) => {
   const { _id } = request.body;
 
+  console.log('rb', request.body);
+
   const deletedBlog = await _deleteBlogById(_id);
 
   if (!deletedBlog)
     throw CustomError('Blog not found', HTTP_STATUS_CODES.NOT_FOUND.code);
 
   // ADD FILTERS TO REQUEST
-  const blogs = await _getBlogList(1, 10);
+  const blogs = await _getBlogList(1, 10, undefined);
 
   return response
     .status(HTTP_STATUS_CODES.OK.code)
