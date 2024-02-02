@@ -7,25 +7,23 @@ const _getBlogList = async (
   pageSize: number,
   search: string | undefined
 ) => {
-  const filter: any = {};
-
+  const query: Record<string, any> = {};
   if (search) {
-    filter.name = { $regex: new RegExp(search, 'i') }; // Case-insensitive search
+    const searchRegex = new RegExp(search, 'i');
+    query.title = searchRegex;
   }
 
-  const totalBlogs = await BlogModel.countDocuments(filter);
+  const [blogs, totalCount] = await Promise.all([
+    BlogModel.find(query)
+      .select('_id title viewCount createdAt updatedAt')
+      .populate('category', 'name')
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize),
+    BlogModel.countDocuments(query),
+  ]);
 
-  const blogList = await BlogModel.find(filter)
-    .select('_id title viewCount createdAt updatedAt')
-    .populate('category', 'name')
-    .sort({ createdAt: -1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize);
-
-  return {
-    totalCount: totalBlogs,
-    blogs: blogList,
-  };
+  return { blogs, totalCount };
 };
 
 const _createBlog = (params: IBlog) => new BlogModel(params).save();
