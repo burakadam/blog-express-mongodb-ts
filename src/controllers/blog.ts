@@ -112,7 +112,7 @@ const updateBlogById: IController = async (request, response) => {
 };
 
 const deleteBlogById: IController = async (request, response) => {
-  const { _id } = request.body;
+  const { _id, page, pageSize, search } = request.body;
 
   console.log('rb', request.body);
 
@@ -122,7 +122,7 @@ const deleteBlogById: IController = async (request, response) => {
     throw CustomError('Blog not found', HTTP_STATUS_CODES.NOT_FOUND.code);
 
   // ADD FILTERS TO REQUEST
-  const blogs = await _getBlogList(1, 10, undefined);
+  const blogs = await _getBlogList(page, pageSize, search);
 
   return response
     .status(HTTP_STATUS_CODES.OK.code)
