@@ -1,12 +1,5 @@
-import { RoleModel } from '@/models/Role';
+import { IRole, RoleModel } from '@/models/Role';
 
-const _createRole = (
-  name: string,
-  permissions: [{ name: string; id: string }]
-) =>
-  new RoleModel({
-    name,
-    permissions,
-  });
+const _createRole = (params: IRole) => new RoleModel(params).save();
 
 export { _createRole };

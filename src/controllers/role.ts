@@ -1,3 +1,7 @@
+import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
+import { _createRole } from '@/helpers/mongoose/role';
+import { IRole } from '@/models/Role';
+import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
 
 interface IController {
@@ -5,9 +9,13 @@ interface IController {
 }
 
 const createRole: IController = async (request, response) => {
-  const { name, premissions } = request.body;
+  const { name, permissions } = request.body;
 
-  console.log(name, premissions);
+  await _createRole({ name, permissions } as IRole);
+
+  return response
+    .status(HTTP_STATUS_CODES.CREATED.code)
+    .json(successResponse('Role Created'));
 };
 
 export { createRole };

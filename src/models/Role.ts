@@ -1,3 +1,4 @@
+import { MODELS } from '@/constants/models';
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IRole extends Document {
@@ -6,10 +7,10 @@ export interface IRole extends Document {
 }
 
 const RoleSchema = new Schema({
-  name: { type: String, required: true },
-  permissions: [{ type: String, required: true }], // Array of permission IDs
+  name: { type: String, required: true, unique: true },
+  permissions: [{ type: String, required: true }],
 });
 
-const RoleModel = mongoose.model<IRole>('Role', RoleSchema);
+const RoleModel = mongoose.model<IRole>(MODELS.ROLE, RoleSchema);
 
 export { RoleModel };
