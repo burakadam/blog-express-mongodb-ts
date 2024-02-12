@@ -5,6 +5,7 @@ import {
   _getCategoryList,
   _updateCategoryById,
 } from '@/helpers/mongoose/category';
+import { ICategory } from '@/models/Category';
 import { CustomError } from '@/utils/customError';
 import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
@@ -16,7 +17,7 @@ interface IController {
 const createCategory: IController = async (request, response) => {
   const { name, description } = request.body;
 
-  await _createCategory({ name, description });
+  await _createCategory({ name, description } as ICategory);
 
   return response
     .status(HTTP_STATUS_CODES.CREATED.code)

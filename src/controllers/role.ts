@@ -1,5 +1,5 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _createRole } from '@/helpers/mongoose/role';
+import { _createRole, _getRoleList } from '@/helpers/mongoose/role';
 import { IRole } from '@/models/Role';
 import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
@@ -18,4 +18,12 @@ const createRole: IController = async (request, response) => {
     .json(successResponse('Role Created'));
 };
 
-export { createRole };
+const getRoles: IController = async (_, response) => {
+  const roles = await _getRoleList();
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Role List', roles));
+};
+
+export { createRole, getRoles };

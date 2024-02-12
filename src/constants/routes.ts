@@ -36,6 +36,10 @@ const ROUTES = {
   ROLE: {
     BASE: '/role',
     CREATE: '/create',
+    LIST: '/list',
+    UPDATE: '/update',
+    DETAIL: '/detail',
+    DELETE: '/delete',
   },
 };
 
