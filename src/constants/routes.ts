@@ -12,7 +12,6 @@ const ROUTES = {
   },
   PERMISSION: {
     BASE: '/permission',
-    CREATE: '/create',
     LIST: '/list',
   },
   CATEGORY: {
@@ -33,6 +32,10 @@ const ROUTES = {
     UPDATE: '/update',
     DETAIL: '/detail',
     DELETE: '/delete',
+  },
+  ROLE: {
+    BASE: '/role',
+    CREATE: '/create',
   },
 };
 

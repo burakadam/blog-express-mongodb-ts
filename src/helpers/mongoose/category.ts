@@ -1,12 +1,22 @@
-import { CategoryModel, ICategory } from '@/models/Category';
+import { CategoryModel } from '@/models/Category';
 
 const _getCategoryList = () => CategoryModel.find();
 
-const _createCategory = ({ name, description }: ICategory) =>
-  new CategoryModel({ name, description }).save();
+const _createCategory = ({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) => new CategoryModel({ name, description }).save();
 
-const _updateCategoryById = (id: string, values: ICategory) =>
-  CategoryModel.findByIdAndUpdate(id, values);
+const _updateCategoryById = (
+  id: string,
+  values: {
+    name: string;
+    description: string;
+  }
+) => CategoryModel.findByIdAndUpdate(id, values);
 
 const _findCategoryById = (_id: string) => CategoryModel.findById(_id);
 

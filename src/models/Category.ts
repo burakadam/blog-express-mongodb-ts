@@ -1,7 +1,7 @@
 import { MODELS } from '@/constants/models';
 import mongoose, { Document, Schema } from 'mongoose';
 
-export interface ICategory {
+export interface ICategory extends Document {
   name: string;
   description: string;
 }
@@ -18,7 +18,7 @@ const CategorySchema = new Schema({
   },
 });
 
-const CategoryModel = mongoose.model<ICategory & Document>(
+const CategoryModel = mongoose.model<ICategory>(
   MODELS.CATEGORY,
   CategorySchema
 );

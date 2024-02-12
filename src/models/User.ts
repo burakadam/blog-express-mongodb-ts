@@ -1,7 +1,8 @@
 import { MODELS } from '@/constants/models';
 import mongoose, { Document, Schema } from 'mongoose';
+import { IRole } from './Role';
 
-export interface IUser {
+export interface IUser extends Document {
   email: string;
   password: string;
   isActive: boolean;
@@ -10,6 +11,7 @@ export interface IUser {
   fullName: string;
   profileImage: string;
   blogs: [string];
+  role: IRole['_id'];
 }
 
 const UserSchema = new Schema({
@@ -43,14 +45,9 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  permissions: [
-    {
-      type: String,
-      ref: MODELS.PERMISSION,
-    },
-  ],
+  role: { type: Schema.Types.ObjectId, ref: 'Role' },
 });
 
-const UserModel = mongoose.model<IUser & Document>(MODELS.USER, UserSchema);
+const UserModel = mongoose.model<IUser>(MODELS.USER, UserSchema);
 
 export { UserModel };

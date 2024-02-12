@@ -1,8 +1,8 @@
 const MODELS = {
   USER: 'User',
   BLOG: 'Blog',
-  PERMISSION: 'Permission',
   CATEGORY: 'Category',
+  ROLE: 'Role',
 };
 
 export { MODELS };
