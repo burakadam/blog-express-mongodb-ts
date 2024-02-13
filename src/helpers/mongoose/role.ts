@@ -4,4 +4,6 @@ const _createRole = (params: IRole) => new RoleModel(params).save();
 
 const _getRoleList = () => RoleModel.find();
 
-export { _createRole, _getRoleList };
+const _findRoleById = (_id: string) => RoleModel.findById(_id);
+
+export { _createRole, _findRoleById, _getRoleList };

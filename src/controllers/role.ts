@@ -1,6 +1,12 @@
 import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
-import { _createRole, _getRoleList } from '@/helpers/mongoose/role';
+import { _getPermissionList } from '@/helpers/mongoose/permission';
+import {
+  _createRole,
+  _findRoleById,
+  _getRoleList,
+} from '@/helpers/mongoose/role';
 import { IRole } from '@/models/Role';
+import { CustomError } from '@/utils/customError';
 import { successResponse } from '@/utils/response';
 import { Request, Response } from 'express';
 
@@ -26,4 +32,30 @@ const getRoles: IController = async (_, response) => {
     .json(successResponse('Role List', roles));
 };
 
-export { createRole, getRoles };
+const getRoleDetail: IController = async (request, response) => {
+  const { _id } = request.body;
+
+  const role = await _findRoleById(_id);
+
+  if (!role)
+    throw CustomError('Role not found', HTTP_STATUS_CODES.NOT_FOUND.code);
+
+  const permissionList = _getPermissionList();
+
+  const permissions = Object.values(permissionList).map((permission) => ({
+    name: permission.name,
+    id: permission.id,
+  }));
+
+  return response.status(HTTP_STATUS_CODES.OK.code).json(
+    successResponse(
+      'Role Detail',
+      {
+        role,
+        permissions,
+      } || {}
+    )
+  );
+};
+
+export { createRole, getRoleDetail, getRoles };
