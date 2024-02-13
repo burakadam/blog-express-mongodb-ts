@@ -6,4 +6,7 @@ const _getRoleList = () => RoleModel.find();
 
 const _findRoleById = (_id: string) => RoleModel.findById(_id);
 
-export { _createRole, _findRoleById, _getRoleList };
+const _updateRoleById = (id: string, params: IRole) =>
+  RoleModel.findByIdAndUpdate(id, params);
+
+export { _createRole, _findRoleById, _getRoleList, _updateRoleById };

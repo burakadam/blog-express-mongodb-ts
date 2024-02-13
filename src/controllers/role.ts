@@ -4,6 +4,7 @@ import {
   _createRole,
   _findRoleById,
   _getRoleList,
+  _updateRoleById,
 } from '@/helpers/mongoose/role';
 import { IRole } from '@/models/Role';
 import { CustomError } from '@/utils/customError';
@@ -58,4 +59,17 @@ const getRoleDetail: IController = async (request, response) => {
   );
 };
 
-export { createRole, getRoleDetail, getRoles };
+const updateRoleById: IController = async (request, response) => {
+  const { _id, name, permissions } = request.body;
+
+  const role = await _updateRoleById(_id, { name, permissions } as IRole);
+
+  if (!role)
+    throw CustomError('Role not found', HTTP_STATUS_CODES.NOT_FOUND.code);
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Role Updated'));
+};
+
+export { createRole, getRoleDetail, getRoles, updateRoleById };
