@@ -1,7 +1,11 @@
 import express, { Router } from 'express';
 
 import { ROUTES } from '@/constants/routes';
-import { createUser, getUsers } from '@/controllers/user';
+import {
+  createUser,
+  getUsers,
+  toggleUserActiveStatus,
+} from '@/controllers/user';
 import { authentication } from '@/middleware/auth';
 import { serviceHandler } from '@/utils/serviceHandler';
 
@@ -11,6 +15,8 @@ router.use(ROUTES.BASE, serviceHandler(authentication));
 
 router.post(ROUTES.USER.CREATE, serviceHandler(createUser));
 
-router.get(ROUTES.USER.LIST, serviceHandler(getUsers));
+router.post(ROUTES.USER.LIST, serviceHandler(getUsers));
+
+router.post(ROUTES.USER.TOGGLE, serviceHandler(toggleUserActiveStatus));
 
 export default router;

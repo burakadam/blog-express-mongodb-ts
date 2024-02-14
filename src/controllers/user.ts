@@ -2,6 +2,7 @@ import { HTTP_STATUS_CODES } from '@/constants/httpStatusCodes';
 import {
   _createUser,
   _getUsers,
+  _updateUserActiveStatusById,
   _updateUserById,
 } from '@/helpers/mongoose/user';
 import { CustomError } from '@/utils/customError';
@@ -14,14 +15,15 @@ interface IController {
 }
 
 const createUser: IController = async (request, response) => {
-  const { email, password, permissions } = request.body;
+  const { email, password, role, fullName } = request.body;
   const hashedPassword = await createHashedPassword(password);
 
   const user = await _createUser({
     email,
     password: hashedPassword,
     isActive: true,
-    permissions,
+    fullName,
+    role,
   });
 
   return response
@@ -50,4 +52,18 @@ const getUsers: IController = async (request, response) => {
     .json(successResponse('Users List', users));
 };
 
-export { createUser, getUsers, updateUserPassword };
+const toggleUserActiveStatus: IController = async (request, response) => {
+  const { id, isActive } = request.body;
+
+  await _updateUserActiveStatusById(id, isActive);
+
+  const users = await _getUsers();
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(
+      successResponse(`User ${isActive ? 'activated' : 'deactivated'}`, users)
+    );
+};
+
+export { createUser, getUsers, toggleUserActiveStatus, updateUserPassword };

@@ -15,11 +15,15 @@ const _getUserById = (id: string) => UserModel.findById(id);
 
 const _getUserByToken = (token: string) => UserModel.findOne({ token });
 
+const _updateUserActiveStatusById = (id: string, isActiveValue: boolean) =>
+  UserModel.findByIdAndUpdate(id, { isActive: isActiveValue }, { new: true });
+
 export {
   _createUser,
   _findUserByEmail,
   _getUserById,
   _getUserByToken,
   _getUsers,
+  _updateUserActiveStatusById,
   _updateUserById,
 };

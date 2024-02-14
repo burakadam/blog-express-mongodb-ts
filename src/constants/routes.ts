@@ -9,6 +9,7 @@ const ROUTES = {
     BASE: '/user',
     CREATE: '/create',
     LIST: '/list',
+    TOGGLE: '/toggleUserActiveStatus',
   },
   PERMISSION: {
     BASE: '/permission',

@@ -1,6 +1,7 @@
 import { MODELS } from '@/constants/models';
-import mongoose, { Document, Schema } from 'mongoose';
-import { IRole } from './Role';
+import moment from 'moment-timezone';
+import mongoose, { Document, Schema, UpdateQuery } from 'mongoose';
+import { IRole, RoleModel } from './Role';
 
 export interface IUser extends Document {
   email: string;
@@ -45,7 +46,26 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  role: { type: Schema.Types.ObjectId, ref: 'Role' },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  role: { type: Schema.Types.ObjectId, ref: RoleModel },
+});
+
+UserSchema.pre('save', function (next) {
+  if (!this.createdAt) this.createdAt = moment().toDate();
+  next();
+});
+
+interface CustomUpdateQuery extends UpdateQuery<IUser> {
+  updatedAt?: Date;
+}
+
+UserSchema.pre<CustomUpdateQuery>('findOneAndUpdate', function (next) {
+  const updateFields: CustomUpdateQuery = this.getUpdate();
+  updateFields.updatedAt = moment().toDate();
+  next();
 });
 
 const UserModel = mongoose.model<IUser>(MODELS.USER, UserSchema);
