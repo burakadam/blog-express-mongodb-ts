@@ -42,6 +42,7 @@ function errorHandler(
   next: NextFunction
 ) {
   try {
+    console.log(err);
     if (err.name === 'ValidationError')
       errorObject = handleValidationError(
         err as mongoose.Error.ValidationError

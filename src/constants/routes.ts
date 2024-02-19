@@ -10,6 +10,7 @@ const ROUTES = {
     CREATE: '/create',
     LIST: '/list',
     TOGGLE: '/toggleUserActiveStatus',
+    UPDATE: '/update',
   },
   PERMISSION: {
     BASE: '/permission',

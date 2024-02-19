@@ -10,7 +10,7 @@ export interface IUser extends Document {
   createdAt: Date;
   permissions: [string];
   fullName: string;
-  profileImage: string;
+  profilePicture: string;
   blogs: [string];
   role: IRole['_id'];
 }
@@ -29,7 +29,7 @@ const UserSchema = new Schema({
   fullName: {
     type: String,
   },
-  profileImage: {
+  profilePicture: {
     type: String,
   },
   blogs: [

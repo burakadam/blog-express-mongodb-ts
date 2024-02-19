@@ -4,7 +4,9 @@ import {
   _getUsers,
   _updateUserActiveStatusById,
   _updateUserById,
+  _updateUserProfileById,
 } from '@/helpers/mongoose/user';
+import { saveImageToS3 } from '@/helpers/saveImageToS3';
 import { CustomError } from '@/utils/customError';
 import { createHashedPassword } from '@/utils/password';
 import { successResponse } from '@/utils/response';
@@ -66,4 +68,27 @@ const toggleUserActiveStatus: IController = async (request, response) => {
     );
 };
 
-export { createUser, getUsers, toggleUserActiveStatus, updateUserPassword };
+const updateUser: IController = async (request, response) => {
+  const { _id, fullName, profilePicture } = request.body;
+  let posterUrl;
+
+  if (request.file) posterUrl = await saveImageToS3(request.file);
+  else posterUrl = profilePicture;
+
+  const user = await _updateUserProfileById(_id, posterUrl, fullName);
+
+  if (!user)
+    throw CustomError('User not found', HTTP_STATUS_CODES.NOT_FOUND.code);
+
+  return response
+    .status(HTTP_STATUS_CODES.OK.code)
+    .json(successResponse('Profile Updated', user));
+};
+
+export {
+  createUser,
+  getUsers,
+  toggleUserActiveStatus,
+  updateUser,
+  updateUserPassword,
+};
